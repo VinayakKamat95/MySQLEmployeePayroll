@@ -1,1 +1,119 @@
-Welcome to Employee Payroll
+
+mysql> show databases;
++---------------------+
+| Database            |
++---------------------+
+| addressbook_service |
+| information_schema  |
+| mysql               |
+| payroll_service     |
+| performance_schema  |
+| sakila              |
+| sys                 |
+| world               |
++---------------------+
+8 rows in set (0.02 sec)
+
+mysql> use payroll_service;
+Database changed
+mysql> show tables
+    -> ;
++---------------------------+
+| Tables_in_payroll_service |
++---------------------------+
+| employee_payroll          |
++---------------------------+
+1 row in set (0.01 sec)
+
+mysql> describe employee_payroll;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | NO   |     | NULL    |                |
+| gender | char(1)     | YES  |     | NULL    |                |
+| salary | double      | YES  |     | NULL    |                |
+| start  | date        | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+5 rows in set (0.02 sec)
+
+mysql> select * from employee_payroll;
++----+-------+--------+--------+------------+
+| id | name  | gender | salary | start      |
++----+-------+--------+--------+------------+
+|  1 | alex  | M      |  10000 | 2020-03-04 |
+|  2 | priya | F      |  15000 | 2021-08-14 |
+|  3 | peter | M      |  17000 | 2020-05-24 |
++----+-------+--------+--------+------------+
+3 rows in set (0.02 sec)
+
+mysql>
+============================================================================
+Ability to extend employee_payroll data to store employee information like employee phone, address and department 
+toExtendEmployee_payroll-8UC 
+
+mysql> ALTER TABLE employee_payroll
+    -> ADD employee_phone BIGINT,
+    -> ADD address VARCHAR(255),
+    -> ADD department VARCHAR(30);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employee_payroll;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(30)  | NO   |     | NULL    |                |
+| gender         | char(1)      | YES  |     | NULL    |                |
+| salary         | double       | YES  |     | NULL    |                |
+| start          | date         | YES  |     | NULL    |                |
+| employee_phone | bigint       | YES  |     | NULL    |                |
+| address        | varchar(255) | YES  |     | NULL    |                |
+| department     | varchar(30)  | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee_payroll MODIFY department VARCHAR(30) NOT NULL;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_payroll
+    -> ALTER COLUMN address SET DEFAULT 'mumbai';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employee_payroll;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(30)  | NO   |     | NULL    |                |
+| gender         | char(1)      | YES  |     | NULL    |                |
+| salary         | double       | YES  |     | NULL    |                |
+| start          | date         | YES  |     | NULL    |                |
+| employee_phone | bigint       | YES  |     | NULL    |                |
+| address        | varchar(255) | YES  |     | mumbai  |                |
+| department     | varchar(30)  | NO   |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee_payroll (name, gender, salary, start, employee_phone)
+    -> VALUES ("adnan", 'M', 25000, '2020-03-11', 7896541230);
+ERROR 1364 (HY000): Field 'department' doesn't have a default value
+
+mysql> INSERT INTO employee_payroll (name, gender, salary, start, employee_phone, department)
+    -> VALUES ("adnan", 'M', 25000, '2020-03-11', 7896541230, 'IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee_payroll;
++----+-------+--------+--------+------------+----------------+---------+------------+
+| id | name  | gender | salary | start      | employee_phone | address | department |
++----+-------+--------+--------+------------+----------------+---------+------------+
+|  1 | alex  | M      |  10000 | 2020-03-04 |           NULL | NULL    | 0          |
+|  2 | priya | F      |  15000 | 2021-08-14 |           NULL | NULL    | 0          |
+|  3 | peter | M      |  17000 | 2020-05-24 |           NULL | NULL    | 0          |
+|  4 | adnan | M      |  25000 | 2020-03-11 |     7896541230 | mumbai  | IT         |
++----+-------+--------+--------+------------+----------------+---------+------------+
+4 rows in set (0.00 sec)
+=========================================================================
