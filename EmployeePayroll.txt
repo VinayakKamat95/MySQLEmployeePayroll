@@ -117,3 +117,38 @@ mysql> select * from employee_payroll;
 +----+-------+--------+--------+------------+----------------+---------+------------+
 4 rows in set (0.00 sec)
 =========================================================================
+To extend employee_payroll table to have Basic Pay, Deductions, Taxable Pay, Income Tax, Net Pay
+toExtendEmployee_payrollToHaveBasic_Deductions_Taxable_IncomeTax_NetPay-9UC 
+
+mysql>  ALTER TABLE employee_payroll
+    -> ADD Basic_Pay double,
+    -> ADD Deductions double,
+    -> ADD Taxable_Pay double,
+    -> ADD Income_Tax double,
+    -> ADD Net_Pay double;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+| id | name  | gender | salary | start      | employee_phone | address | department | Basic_Pay | Deductions | Taxable_Pay | Income_Tax | Net_Pay |
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+|  1 | alex  | M      |  10000 | 2020-03-04 |           NULL | NULL    | 0          |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  2 | priya | F      |  15000 | 2021-08-14 |           NULL | NULL    | 0          |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  3 | peter | M      |  17000 | 2020-05-24 |           NULL | NULL    | 0          |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  4 | adnan | M      |  25000 | 2020-03-11 |     7896541230 | mumbai  | IT         |      NULL |       NULL |        NULL |       NULL |    NULL |
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+4 rows in set (0.00 sec)
+mysql> select * from employee_payroll;
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+| id | name  | gender | salary | start      | employee_phone | address | department | Basic_Pay | Deductions | Taxable_Pay | Income_Tax | Net_Pay |
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+|  1 | alex  | M      |  10000 | 2020-03-04 |     9874563210 | mumbai  | IT         |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+|  2 | priya | F      |  15000 | 2021-08-14 |     8874963210 | mumbai  | IT         |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
+|  3 | peter | M      |  17000 | 2020-05-24 |     9456317890 | mumbai  | IT         |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+|  4 | adnan | M      |  25000 | 2020-03-11 |     7896541230 | mumbai  | IT         |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
++----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+=======================================================================
