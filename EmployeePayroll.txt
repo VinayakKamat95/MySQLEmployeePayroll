@@ -153,7 +153,7 @@ mysql> select * from employee_payroll;
 mysql>
 ============================================================================================================
 To make priya as part of Sales and IT Department
-toMakeTerissaAsPartOfSalesAndMarketingDepartment-UC10
+ToMakeTerissaAsPartOfSalesAndMarketingDepartment-UC10
 
 mysql> select * from employee_payroll;
 +----+-------+--------+--------+------------+----------------+---------+------------+-----------+------------+-------------+------------+---------+
@@ -185,3 +185,118 @@ mysql> select * from employee_payroll;
 
 mysql>
 ==========================================================================================
+Implement the ER Diagram into Payroll Service DB
+implementERDiagramIntoPayrollServiceDB-UC12
+
+mysql> select * from Company ;
++------------+--------+
+| company_id | name   |
++------------+--------+
+|          1 | amazon |
+|          2 | Dmart  |
++------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> describe Company ;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| company_id | int         | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(50) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++----+-------+--------+--------+------------+----------------+---------+------------+
+| id | name  | gender | salary | start      | employee_phone | address | company_id |
++----+-------+--------+--------+------------+----------------+---------+------------+
+|  1 | alex  | M      |  10000 | 2020-03-04 |     9874563210 | mumbai  |          1 |
+|  2 | priya | F      |  15000 | 2021-08-14 |     8874963210 | mumbai  |          2 |
+|  3 | peter | M      |  17000 | 2020-05-24 |     9456317890 | mumbai  |          1 |
+|  4 | adnan | M      |  25000 | 2020-03-11 |     7896541230 | mumbai  |          2 |
+|  5 | priya | F      |  25000 | 2020-05-14 |     8963147890 | mumbai  |          2 |
++----+-------+--------+--------+------------+----------------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> describe Employee;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int          | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(30)  | NO   |     | NULL    |                |
+| gender         | char(1)      | YES  |     | NULL    |                |
+| salary         | double       | YES  |     | NULL    |                |
+| start          | date         | YES  |     | NULL    |                |
+| employee_phone | bigint       | YES  |     | NULL    |                |
+| address        | varchar(255) | YES  |     | mumbai  |                |
+| company_id     | int          | YES  | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from Department;
++---------------+-------+
+| department_id | name  |
++---------------+-------+
+|             1 | sales |
+|             2 | it    |
++---------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> describe Department;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| department_id | int         | NO   | PRI | NULL    | auto_increment |
+| name          | varchar(50) | NO   |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Employee_Department;
++------------------------+-------------+---------------+
+| employee_department_id | employee_id | department_id |
++------------------------+-------------+---------------+
+|                      1 |           1 |             2 |
+|                      2 |           2 |             2 |
+|                      3 |           3 |             2 |
+|                      4 |           4 |             2 |
+|                      5 |           5 |             1 |
++------------------------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> describe Employee_Department;
++------------------------+------+------+-----+---------+----------------+
+| Field                  | Type | Null | Key | Default | Extra          |
++------------------------+------+------+-----+---------+----------------+
+| employee_department_id | int  | NO   | PRI | NULL    | auto_increment |
+| employee_id            | int  | NO   | MUL | NULL    |                |
+| department_id          | int  | NO   | MUL | NULL    |                |
++------------------------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Payroll ;
++-------------+-----------+------------+-------------+------------+---------+
+| employee_id | basic_Pay | deductions | taxable_Pay | income_Tax | net_Pay |
++-------------+-----------+------------+-------------+------------+---------+
+|           1 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+|           2 |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
+|           3 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+|           4 |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
+|           5 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
++-------------+-----------+------------+-------------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> describe Payroll ;
++-------------+--------+------+-----+---------+-------+
+| Field       | Type   | Null | Key | Default | Extra |
++-------------+--------+------+-----+---------+-------+
+| employee_id | int    | YES  | MUL | NULL    |       |
+| basic_Pay   | double | NO   |     | NULL    |       |
+| deductions  | double | NO   |     | NULL    |       |
+| taxable_Pay | double | NO   |     | NULL    |       |
+| income_Tax  | double | NO   |     | NULL    |       |
+| net_Pay     | double | NO   |     | NULL    |       |
++-------------+--------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql>
+========================================================================================
