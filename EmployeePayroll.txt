@@ -300,3 +300,70 @@ mysql> describe Payroll ;
 
 mysql>
 ========================================================================================
+Ensure all retrieve queries done especially in UC 4, UC 5 and UC 7 are working with new table structure
+allRetrieveQueriesDoneUC4,UC5,UC7WorkingWithNewTableStructure-UC13
+
+mysql> SELECT Employee.name,Company.name,Payroll.*
+    -> FROM Employee
+    -> JOIN Company on (Employee.company_id=Company.company_id)
+    -> JOIN Payroll on (Payroll.employee_id=Employee.id);
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+| name  | name   | employee_id | basic_Pay | deductions | taxable_Pay | income_Tax | net_Pay |
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+| alex  | amazon |           1 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+| priya | Dmart  |           2 |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
+| peter | amazon |           3 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+| adnan | Dmart  |           4 |   3500000 |    1500000 |     2500000 |     550000 | 1550000 |
+| priya | Dmart  |           5 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Employee.name,Company.name,Payroll.*
+    -> FROM Employee
+    -> JOIN Company on (Employee.company_id=Company.company_id)
+    -> JOIN Payroll on (Payroll.employee_id=Employee.id)
+    -> WHERE Employee.name="alex";
++------+--------+-------------+-----------+------------+-------------+------------+---------+
+| name | name   | employee_id | basic_Pay | deductions | taxable_Pay | income_Tax | net_Pay |
++------+--------+-------------+-----------+------------+-------------+------------+---------+
+| alex | amazon |           1 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
++------+--------+-------------+-----------+------------+-------------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Employee.name,Company.name,Payroll.*
+    -> FROM Employee
+    -> JOIN Company on (Employee.company_id=Company.company_id)
+    -> JOIN Payroll on (Payroll.employee_id=Employee.id)
+    -> WHERE Employee.start BETWEEN CAST('2020-05-01'
+    -> AS DATE) AND DATE(NOW());
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+| name  | name   | employee_id | basic_Pay | deductions | taxable_Pay | income_Tax | net_Pay |
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+| peter | amazon |           3 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
+| priya | Dmart  |           5 |   3000000 |    1000000 |     2000000 |     500000 | 1500000 |
++-------+--------+-------------+-----------+------------+-------------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> SELECT SUM(salary) FROM Employee
+    -> WHERE gender = 'F' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|       40000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> SELECT SUM(salary) FROM Employee
+    -> WHERE gender = 'M' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|       52000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+===========================================================================================
